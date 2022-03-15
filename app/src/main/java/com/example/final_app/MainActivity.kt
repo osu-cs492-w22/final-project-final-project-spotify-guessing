@@ -10,7 +10,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
-import com.example.final_app.databinding.ActivityMainBinding
+import com.example.finalapp.R
+import com.example.finalapp.databinding.ActivityMainBinding
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.android.appremote.api.Connector
@@ -21,8 +22,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private val ClientID: String = "0e94fc1ee6bf47ff84b2f72bfed235b9"
+//    private val ClientID: String = "0e94fc1ee6bf47ff84b2f72bfed235b9"
+    private val ClientID: String = "74d7ce7a3dc24285bade132ac8b23d7b"
     private var mSpotifyapp: SpotifyAppRemote? = null
+//    private val redirectUri = "com.localhost.Spotifyguessinggame://callback"
+    private val redirectUri = "https://localhost/callback/"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         val connectionParams = ConnectionParams.Builder(ClientID)
+            .setRedirectUri(redirectUri)
             .showAuthView(true)
             .build()
 

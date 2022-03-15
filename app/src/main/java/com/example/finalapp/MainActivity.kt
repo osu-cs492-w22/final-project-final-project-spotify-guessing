@@ -16,9 +16,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private val ClientID: String = "0e94fc1ee6bf47ff84b2f72bfed235b9"
+    //    private val ClientID: String = "0e94fc1ee6bf47ff84b2f72bfed235b9"
+    private val ClientID: String = "74d7ce7a3dc24285bade132ac8b23d7b"
     private var mSpotifyapp: SpotifyAppRemote? = null
-    private val redirectUri = "com.localhost.Spotifyguessinggame://callback"
+    //    private val redirectUri = "com.localhost.Spotifyguessinggame://callback"
+    private val redirectUri = "https://localhost/callback/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,9 +76,9 @@ class MainActivity : AppCompatActivity() {
                 val trackName: String = it.track.name
                 val icon = it.track.imageUri
 
-                Glide.with(this)
-                    .load(icon)
-                    .into(findViewById(R.id.iv_track_icon))
+//                Glide.with(this)
+//                    .load(icon)
+//                    .into(findViewById(R.id.iv_track_icon))
 
                 findViewById<TextView>(R.id.track_Description).text =
                     trackName
