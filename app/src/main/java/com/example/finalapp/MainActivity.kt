@@ -104,8 +104,16 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId){
             R.id.action_play ->{
                 mSpotifyapp?.let {
-                    it.playerApi.pause()
 
+                    if(isPlaying) {
+                        it.playerApi.pause()
+                        isPlaying = false
+                    }
+                    else
+                    {
+                        it.playerApi.resume()
+                        isPlaying = true
+                    }
                 }
                 true
             }
