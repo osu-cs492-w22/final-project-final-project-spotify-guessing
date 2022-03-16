@@ -7,7 +7,11 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     tools:context=".MainActivity">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
     <ImageView
         android:id="@+id/iv_track_icon"
         android:layout_width="200dp"
@@ -29,5 +33,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
+</LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

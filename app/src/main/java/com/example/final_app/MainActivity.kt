@@ -10,6 +10,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import com.example.finalapp.R
 import com.example.finalapp.databinding.ActivityMainBinding
 import com.spotify.android.appremote.api.ConnectionParams
@@ -59,13 +60,41 @@ class MainActivity : AppCompatActivity() {
     private fun connected() {
         mSpotifyapp?.let {
             // Play a playlist
-            val playlistURI = "spotify:playlist:37i9dQZF1DX2sUQwD7tbmL"
+            val playlistURI = "spotify:album:7ebnxkx8HZNvtTB3me1S9C"
             it.playerApi.play(playlistURI)
-            // Subscribe to PlayerState
             it.playerApi.subscribeToPlayerState().setEventCallback {
-                val track: Track = it.track
-                Log.d("MainActivity", track.name + " by " + track.artist.name)
+                val trackName: String = it.track.name
+                val icon = it.track.imageUri
+
+//                Glide.with(this)
+//                    .load(icon)
+//                    .into(findViewById(R.id.iv_track_icon))
+
+                findViewById<TextView>(R.id.track_Description).text =
+                    trackName
             }
+
+
+        }
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main,menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId){
+            R.id.action_play ->{
+                mSpotifyapp?.let {
+                    it.playerApi.pause()
+
+                }
+                true
+            }
+            else ->super.onOptionsItemSelected(item)
         }
 
     }

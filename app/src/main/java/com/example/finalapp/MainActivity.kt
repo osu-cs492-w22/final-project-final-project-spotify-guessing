@@ -2,6 +2,8 @@ package com.example.finalapp
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import android.widget.TextView
@@ -21,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     private var mSpotifyapp: SpotifyAppRemote? = null
     //    private val redirectUri = "com.localhost.Spotifyguessinggame://callback"
     private val redirectUri = "https://localhost/callback/"
+
+    private var isPlaying = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +75,7 @@ class MainActivity : AppCompatActivity() {
         mSpotifyapp?.let {
             // Play a playlist
             val playlistURI = "spotify:album:7ebnxkx8HZNvtTB3me1S9C"
+            it.playerApi.setShuffle(true)
             it.playerApi.play(playlistURI)
             it.playerApi.subscribeToPlayerState().setEventCallback {
                 val trackName: String = it.track.name
@@ -85,6 +90,32 @@ class MainActivity : AppCompatActivity() {
             }
 
 
+        }
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main,menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId){
+            R.id.action_play ->{
+                mSpotifyapp?.let {
+                    it.playerApi.pause()
+
+                }
+                true
+            }
+            R.id.action_skip->{
+                mSpotifyapp?.let {
+                    it.playerApi.skipNext()
+                }
+                true
+            }
+            else ->super.onOptionsItemSelected(item)
         }
 
     }
