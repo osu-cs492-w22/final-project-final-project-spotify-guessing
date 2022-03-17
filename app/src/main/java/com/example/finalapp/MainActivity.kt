@@ -1,18 +1,23 @@
 package com.example.finalapp
 
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.example.finalapp.databinding.ActivityMainBinding
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.android.appremote.api.Connector
+import com.spotify.protocol.types.ImageUri
+import com.squareup.picasso.Picasso
 
 
 class MainActivity : AppCompatActivity() {
@@ -80,11 +85,12 @@ class MainActivity : AppCompatActivity() {
             it.playerApi.play(playlistURI)
             it.playerApi.subscribeToPlayerState().setEventCallback {
                 val trackName: String = it.track.name
-                val icon = it.track.imageUri
+                val icon = it.track.imageUri.raw
 
-//                Glide.with(this)
-//                    .load(icon)
-//                    .into(findViewById(R.id.iv_track_icon))
+
+
+
+
 
                 findViewById<TextView>(R.id.track_Description).text =
                     trackName
