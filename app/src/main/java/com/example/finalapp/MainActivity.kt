@@ -177,7 +177,7 @@ class MainActivity : AppCompatActivity() {
         mSpotifyapp?.let {
             SpotifyAppRemote.disconnect(it)
         }
-
+        PlayandResume()
     }
 
 
