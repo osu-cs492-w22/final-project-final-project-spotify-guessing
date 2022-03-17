@@ -104,24 +104,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
             R.id.action_play ->{
-                mSpotifyapp?.let {
-
-                    if(isPlaying) {
-                        it.playerApi.pause()
-                        isPlaying = false
-                    }
-                    else
-                    {
-                        it.playerApi.resume()
-                        isPlaying = true
-                    }
-                }
+                PlayandResume()
                 true
             }
             R.id.action_skip->{
-                mSpotifyapp?.let {
-                    it.playerApi.skipNext()
-                }
+                NextTrack()
                 true
             }
             else ->super.onOptionsItemSelected(item)
@@ -135,5 +122,28 @@ class MainActivity : AppCompatActivity() {
             SpotifyAppRemote.disconnect(it)
         }
 
+    }
+
+
+    private fun NextTrack(){
+        mSpotifyapp?.let {
+            it.playerApi.skipNext()
+        }
+    }
+
+    private fun PlayandResume()
+    {
+        mSpotifyapp?.let {
+
+            if(isPlaying) {
+                it.playerApi.pause()
+                isPlaying = false
+            }
+            else
+            {
+                it.playerApi.resume()
+                isPlaying = true
+            }
+        }
     }
 }
