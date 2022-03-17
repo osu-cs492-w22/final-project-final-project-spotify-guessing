@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
@@ -18,9 +19,10 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:id="@+id/tv_user_score"
-        android:layout_marginTop="24dp"
+        android:layout_marginBottom="10dp"
         android:textAppearance="?attr/textAppearanceHeadline4"/>
 
+    <!--
     <ImageView
         android:id="@+id/iv_track_icon"
         android:layout_width="200dp"
@@ -29,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
-
+    -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,6 +61,7 @@
         android:textAppearance="?attr/textAppearanceHeadline6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"/>
 </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
