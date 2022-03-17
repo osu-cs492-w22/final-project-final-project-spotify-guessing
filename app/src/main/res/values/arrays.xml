@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_playlist_entries">
+        <item>@string/pref_playlist_entry_country</item>
+        <item>@string/pref_playlist_entry_pop</item>
+        <item>@string/pref_playlist_entry_rock</item>
+        <item>@string/pref_playlist_entry_rap</item>
+    </string-array>
+    <string-array name="pref_playlist_values">
+        <item>@string/pref_playlist_val_country</item>
+        <item>@string/pref_playlist_val_pop</item>
+        <item>@string/pref_playlist_val_rock</item>
+        <item>@string/pref_playlist_val_rap</item>
+    </string-array>
+    
+</resources>
