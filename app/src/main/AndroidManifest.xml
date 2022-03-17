@@ -9,6 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Final_App">
+
+        <activity
+            android:name="com.example.finalapp.SettingsActivity"
+            android:exported="false"
+            android:parentActivityName="com.example.finalapp.MainActivity" />
+
         <activity
             android:name="com.example.finalapp.MainActivity"
             android:exported="true"
