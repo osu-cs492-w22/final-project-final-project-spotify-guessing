@@ -27,5 +27,12 @@
         <item name="iconTint">@color/white</item>
     </style>
 
+    <style name="SettingsFragmentStyle">
+
+        <item name="android:textColor">@color/spotify_green</item>
+
+        ...
+    </style>
+
     <style name="Theme.Final_App.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 </resources>
