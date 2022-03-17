@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import com.example.finalapp.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.spotify.android.appremote.api.ConnectionParams
@@ -58,13 +59,30 @@ class MainActivity : AppCompatActivity() {
             .setRedirectUri(redirectUri)
             .showAuthView(true)
             .build()
-
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val genre = sharedPrefs.getString(
+            getString(R.string.pref_playlist_key),
+            null
+        )
+        val guesses = sharedPrefs.getString(
+            getString(R.string.pref_guesses_key),
+            null
+        )
+        val rounds = sharedPrefs.getString(
+            getString(R.string.pref_rounds_key),
+            null
+        )
+        if (genre != null) {
+            Log.d("Genre", genre)
+        }
         SpotifyAppRemote.connect(this, connectionParams, object : Connector.ConnectionListener {
             override fun onConnected(appRemote: SpotifyAppRemote) {
                 mSpotifyapp = appRemote
                 Log.d("MainActivity", "Connected! Yay!")
                 // Now you can start interacting with App Remote
-                connected()
+                if (genre != null) {
+                    connected(genre)
+                }
             }
 
             override fun onFailure(throwable: Throwable) {
@@ -72,6 +90,7 @@ class MainActivity : AppCompatActivity() {
                 // Something went wrong when attempting to connect! Handle errors here
             }
         })
+
         val guessBtn: Button = findViewById(R.id.btn_guess)
         guessBtn.setOnClickListener {
             var guess = guessBoxET.text.toString().lowercase()
@@ -143,10 +162,23 @@ class MainActivity : AppCompatActivity() {
         })
     }*/
 
-    private fun connected() {
+    private fun connected(genre : String) {
         mSpotifyapp?.let {
+            var playlistURI = "spotify:playlist:37i9dQZF1DZ06evO4BaAkp"
+
             // Play a playlist
-            val playlistURI = "spotify:playlist:37i9dQZF1DZ06evO4BaAkp"
+            if (genre == "rock"){
+                playlistURI = "spotify:playlist:37i9dQZF1EQpj7X7UK8OOF"
+            }
+            else if (genre == "pop") {
+                playlistURI = "spotify:playlist:37i9dQZF1EQncLwOalG3K7"
+            }
+            else if (genre == "country") {
+                playlistURI = "spotify:playlist:14oOrIpv9kuNm2lRcJwQdY"
+            }
+            else if (genre == "rap") {
+                playlistURI = "spotify:playlist:1tSgd8fWqF5fgMbEpXsPG3"
+            }
             it.playerApi.setShuffle(true)
             it.playerApi.play(playlistURI)
             it.playerApi.subscribeToPlayerState().setEventCallback {
