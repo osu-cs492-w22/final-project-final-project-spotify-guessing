@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="@string/pref_game_settings">
+
+    <ListPreference
+        android:title="@string/pref_playlist_genre"
+        android:key="@string/pref_playlist_key"
+        android:entries="@array/pref_playlist_entries"
+        android:entryValues="@array/pref_playlist_values"
+        android:defaultValue="@string/pref_playlist_default"
+        android:dialogTitle="@string/pref_playlist_genre"
+        app:useSimpleSummaryProvider="true"/>
+    <SeekBarPreference
+        android:title="@string/pref_guesses_title"
+        android:key="@string/pref_guesses_key"
+        android:min="1"
+        android:max="10"
+        app:showSeekBarValue="true"/>
+    <SeekBarPreference
+        android:title="@string/pref_rounds_title"
+        android:key="@string/pref_rounds_key"
+        android:min="1"
+        android:max="10"
+        app:showSeekBarValue="true"/>
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>
