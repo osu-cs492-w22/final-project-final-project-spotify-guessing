@@ -1,5 +1,6 @@
 package com.example.finalapp
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -153,6 +154,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
+            R.id.action_settings -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
+                true
+            }
             R.id.action_play ->{
                 PlayandResume()
                 true
@@ -166,8 +172,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         mSpotifyapp?.let {
             SpotifyAppRemote.disconnect(it)
         }
