@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
@@ -17,8 +19,9 @@ import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.android.appremote.api.Connector
 import com.spotify.protocol.types.ImageUri
-import com.squareup.picasso.Picasso
+import org.w3c.dom.Text
 
+const val SCORE_PREFIX = "Score: "
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,9 +35,15 @@ class MainActivity : AppCompatActivity() {
 
     private var isPlaying = true
 
+    private lateinit var guessBoxET: EditText
+    private var userScore: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        guessBoxET = findViewById(R.id.et_guess_box)
+        findViewById<TextView>(R.id.tv_user_score).text = "$SCORE_PREFIX$userScore"
 
         val connectionParams = ConnectionParams.Builder(ClientID)
             .setRedirectUri(redirectUri)
@@ -54,6 +63,37 @@ class MainActivity : AppCompatActivity() {
                 // Something went wrong when attempting to connect! Handle errors here
             }
         })
+        val guessBtn: Button = findViewById(R.id.btn_guess)
+        guessBtn.setOnClickListener {
+            var guess = guessBoxET.text.toString().lowercase()
+            var correctAnswer: String = findViewById<TextView>(R.id.track_Description).text.toString().lowercase()
+            // Remove white spacing, commas, apostrophes to help prevent "wrong" answers with slightly off grammar
+            // For correct answer
+            correctAnswer = correctAnswer.replace("'", "")
+            correctAnswer = correctAnswer.replace(",", "")
+            correctAnswer = correctAnswer.replace(" ", "")
+            correctAnswer = correctAnswer.replace("\n", "")
+            correctAnswer = correctAnswer.replace("?", "")
+            correctAnswer = correctAnswer.replace("!", "")
+            correctAnswer = correctAnswer.replace(".", "")
+            // For user's guess
+            guess = guess.replace("'", "")
+            guess = guess.replace(",", "")
+            guess = guess.replace(" ", "")
+            guess = guess.replace("\n", "")
+            guess = guess.replace("?", "")
+            guess = guess.replace("!", "")
+            guess = guess.replace(".", "")
+            Log.d("answer", guess)
+            Log.d("answer", correctAnswer)
+            if (guess == correctAnswer) {
+                Log.d("answer", "Correct!!")
+                userScore += 10
+                findViewById<TextView>(R.id.tv_user_score).text = "$SCORE_PREFIX$userScore"
+            } else {
+                Log.d("answer", "incorrect!!")
+            }
+        }
     }
 
     /*override fun onStart() {
@@ -80,20 +120,24 @@ class MainActivity : AppCompatActivity() {
     private fun connected() {
         mSpotifyapp?.let {
             // Play a playlist
-            val playlistURI = "spotify:album:7ebnxkx8HZNvtTB3me1S9C"
+            val playlistURI = "spotify:playlist:37i9dQZF1DZ06evO4BaAkp"
             it.playerApi.setShuffle(true)
             it.playerApi.play(playlistURI)
             it.playerApi.subscribeToPlayerState().setEventCallback {
                 val trackName: String = it.track.name
+                val album: String = it.track.album.name
+                val artist: String = it.track.artist.name
                 val icon = it.track.imageUri.raw
-
-
-
-
-
+                var wholeString: String = ""
+                if (album == trackName) {
+                    // prevent repetition for single releases with no album
+                    wholeString = artist.plus(", ").plus(trackName)
+                } else {
+                    wholeString = artist.plus(", ").plus(trackName).plus(", ").plus(album)
+                }
 
                 findViewById<TextView>(R.id.track_Description).text =
-                    trackName
+                    wholeString
             }
 
 
