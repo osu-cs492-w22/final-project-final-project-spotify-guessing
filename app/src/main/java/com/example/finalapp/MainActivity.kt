@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
@@ -15,16 +17,31 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import android.widget.TextView
+import androidx.core.os.HandlerCompat.postDelayed
 import com.example.finalapp.databinding.ActivityMainBinding
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.android.appremote.api.Connector
 import com.spotify.protocol.types.ImageUri
 import org.w3c.dom.Text
+import java.util.*
+
+
 
 const val SCORE_PREFIX = "Score: "
 
 class MainActivity : AppCompatActivity() {
+
+    private var secondsRemaining = 30.0
+    val timer = object: CountDownTimer(30000,1000){
+        override fun onTick(p0: Long) {
+            secondsRemaining = (p0 / 1000).toDouble()
+        }
+
+        override fun onFinish() {
+            stopRound()
+        }
+    }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -57,6 +74,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("MainActivity", "Connected! Yay!")
                 // Now you can start interacting with App Remote
                 connected()
+
             }
 
             override fun onFailure(throwable: Throwable) {
@@ -141,8 +159,8 @@ class MainActivity : AppCompatActivity() {
                     wholeString
             }
 
-
         }
+        timer.start()
 
     }
 
@@ -187,6 +205,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun stopRound()
+    {
+
+        mSpotifyapp?.let {
+            it.playerApi.pause()
+            isPlaying = false
+        }
+    }
+
     private fun PlayandResume()
     {
         mSpotifyapp?.let {
@@ -194,11 +221,13 @@ class MainActivity : AppCompatActivity() {
             if(isPlaying) {
                 it.playerApi.pause()
                 isPlaying = false
+                timer.cancel()
             }
             else
             {
                 it.playerApi.resume()
                 isPlaying = true
+                timer.start()
             }
         }
     }
