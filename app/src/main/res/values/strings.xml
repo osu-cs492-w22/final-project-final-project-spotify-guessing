@@ -13,4 +13,6 @@
 
     <string name="guess_prompt">Guess the song name</string>
     <string name="guess">Guess</string>
+    <string name="guess_correct">✔️ Correct!!!</string>
+    <string name="guess_incorrect">❌ Incorrect</string>
 </resources>
