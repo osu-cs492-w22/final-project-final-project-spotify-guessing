@@ -8,6 +8,35 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name="pref_game_settings">Game Settings</string>
+    <string name="pref_guesses_title">Select Number of Guesses</string>
+    <string name="pref_guesses_key">guesses</string>
+
+    <string name="pref_rounds_title">Select Number of Rounds</string>
+    <string name="pref_rounds_key">rounds</string>
+
+    <string name="pref_playlist_genre">Select a Playlist Genre</string>
+    <string name="pref_playlist_key">genre</string>
+
+    <string name="pref_playlist_entry_country">Country</string>
+    <string name="pref_playlist_entry_rap">Rap</string>
+    <string name="pref_playlist_entry_rock">Rock</string>
+    <string name="pref_playlist_entry_pop">Pop</string>
+
+
+
+    <string name="pref_playlist_val_country" translatable="false">country</string>
+    <string name="pref_playlist_val_rap" translatable="false">rap</string>
+    <string name="pref_playlist_val_rock" translatable="false">rock</string>
+    <string name="pref_playlist_val_pop" translatable="false">pop</string>
+
+    <string name="pref_playlist_default">@string/pref_playlist_val_country</string>
+
+
+
+
+
+
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
