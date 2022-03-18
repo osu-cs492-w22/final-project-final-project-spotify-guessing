@@ -17,12 +17,14 @@
         android:key="@string/pref_guesses_key"
         android:min="1"
         android:max="10"
+        android:progress="3"
         app:showSeekBarValue="true"/>
     <SeekBarPreference
         android:title="@string/pref_rounds_title"
         android:key="@string/pref_rounds_key"
         android:min="1"
         android:max="10"
+        android:defaultValue="3"
         app:showSeekBarValue="true"/>
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>
