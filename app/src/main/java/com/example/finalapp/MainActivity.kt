@@ -2,6 +2,7 @@ package com.example.finalapp
 
 import android.app.Activity
 import android.app.Activity.*
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -20,6 +21,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
@@ -28,6 +30,7 @@ import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.android.appremote.api.Connector
 import com.spotify.protocol.types.Image
 import com.spotify.protocol.types.ImageUri
+import com.spotify.protocol.types.Item
 import com.spotify.protocol.types.PlayerState
 import org.w3c.dom.Text
 import java.util.*
@@ -332,6 +335,11 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_play ->{
+                if(isPlaying)
+                    item.icon = AppCompatResources.getDrawable(this,R.drawable.action_play)
+                else
+                    item.icon = AppCompatResources.getDrawable(this,R.drawable.action_pause)
+
                 PlayandResume()
                 true
             }
@@ -417,6 +425,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun PlayandResume()
     {
+
         mSpotifyapp?.let {
 
             if(isPlaying) {
