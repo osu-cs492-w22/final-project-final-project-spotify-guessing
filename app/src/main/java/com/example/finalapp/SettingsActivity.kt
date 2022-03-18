@@ -2,7 +2,6 @@ package com.example.finalapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.finalapp.R
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

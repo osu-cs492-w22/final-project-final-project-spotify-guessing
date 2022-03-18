@@ -1,15 +1,10 @@
 package com.example.finalapp
 
 import android.app.Activity
-import android.app.Activity.*
-import android.content.ClipData
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -17,23 +12,16 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.android.appremote.api.Connector
-import com.spotify.protocol.types.Image
-import com.spotify.protocol.types.ImageUri
-import com.spotify.protocol.types.Item
-import com.spotify.protocol.types.PlayerState
-import org.w3c.dom.Text
-import java.util.*
+
 
 const val SCORE_PREFIX = "Score: "
 
