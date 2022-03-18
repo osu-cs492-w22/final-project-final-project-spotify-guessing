@@ -22,7 +22,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import com.example.finalapp.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.SpotifyAppRemote
@@ -263,6 +262,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
+            R.id.action_info -> {
+                Snackbar.make(
+                    findViewById(R.id.constraint_layout),
+                    "Enter the song title for 5 points, or artist, title, and album for 10!",
+                    Snackbar.LENGTH_LONG
+                ).show()
+                true
+            }
             R.id.action_share -> {
                 shareScore()
                 true

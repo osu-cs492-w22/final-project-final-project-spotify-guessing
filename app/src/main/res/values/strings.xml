@@ -3,6 +3,7 @@
     <string name="app_title">SongGuessr</string>
     <string name="action_settings">Settings</string>
     <string name="action_share">Share Score</string>
+    <string name="action_info">How to play</string>
 
     <string name="num_guesses">Guesses Remaining: %1$s</string>
     <!-- Strings used for fragments for navigation -->

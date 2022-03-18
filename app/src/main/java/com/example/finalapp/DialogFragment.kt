@@ -25,7 +25,7 @@ class EndGameDialogFragment(private val score: Int) : DialogFragment() {
                 // Add action buttons
                 .setPositiveButton(R.string.dialog_share,
                     DialogInterface.OnClickListener { dialog, id ->
-                        val shareScore = "Score: $score"
+                        val shareScore = "Your SongGuessr Score Was: $score"
                         val intent = Intent().apply {
                             action = Intent.ACTION_SEND
                             putExtra(Intent.EXTRA_TEXT, shareScore)
