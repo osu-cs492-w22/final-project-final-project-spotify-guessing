@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
@@ -37,13 +38,23 @@ const val SCORE_PREFIX = "Score: "
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    //    private val ClientID: String = "0e94fc1ee6bf47ff84b2f72bfed235b9"
     private val ClientID: String = "74d7ce7a3dc24285bade132ac8b23d7b"
     private var mSpotifyapp: SpotifyAppRemote? = null
-    //    private val redirectUri = "com.localhost.Spotifyguessinggame://callback"
     private val redirectUri = "https://localhost/callback/"
 
     private var isPlaying = true
+    private var timeRemaing = -1
+    private val timer = object: CountDownTimer(30000,1000){
+        override fun onTick(p0: Long) {
+            timeRemaing = (p0 / 1000).toInt()
+            findViewById<TextView>(R.id.timer_remaining).text = ("Seconds remaining: " + timeRemaing)
+        }
+
+        override fun onFinish() {
+            stopRound()
+        }
+
+    }
 
     private lateinit var guessBoxET: EditText
     private var userScore: Int = 0
@@ -198,9 +209,8 @@ class MainActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.track_Description).text =
                     wholeString
             }
-
-
         }
+        timer.start()
 
     }
 
@@ -252,10 +262,17 @@ class MainActivity : AppCompatActivity() {
         PlayandResume()
     }
 
+    private fun stopRound(){
+        mSpotifyapp?.let {
+            it.playerApi.pause()
+        }
+        isPlaying = false;
+    }
 
     private fun NextTrack(){
         mSpotifyapp?.let {
             it.playerApi.skipNext()
+            timer.start()
         }
     }
 
@@ -266,11 +283,13 @@ class MainActivity : AppCompatActivity() {
             if(isPlaying) {
                 it.playerApi.pause()
                 isPlaying = false
+                timer.cancel()
             }
             else
             {
                 it.playerApi.resume()
                 isPlaying = true
+                timer.start()
             }
         }
     }
