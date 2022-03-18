@@ -72,10 +72,11 @@ class MainActivity : AppCompatActivity() {
         val guesses = sharedPrefs.getInt(
             getString(R.string.pref_guesses_key),
             3
+
         )
-        val rounds = sharedPrefs.getString(
+        val rounds = sharedPrefs.getInt(
             getString(R.string.pref_rounds_key),
-            null
+            3
         )
         if (genre != null) {
             Log.d("Genre", genre)
@@ -249,10 +250,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        stopRound()
+        timer.cancel()
         mSpotifyapp?.let {
             SpotifyAppRemote.disconnect(it)
         }
-        PlayandResume()
+        //PlayandResume()
     }
 
     private fun stopRound(){

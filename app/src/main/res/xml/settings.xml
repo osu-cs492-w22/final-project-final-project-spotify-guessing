@@ -18,6 +18,7 @@
         android:min="1"
         android:max="10"
         android:progress="3"
+        android:defaultValue="3"
         app:showSeekBarValue="true"/>
     <SeekBarPreference
         android:title="@string/pref_rounds_title"
