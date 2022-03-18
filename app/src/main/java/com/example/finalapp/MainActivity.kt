@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var guessBoxET: EditText
     lateinit var songTitle: String
+    lateinit var songAndArtist : String
     private var userScore: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,6 +119,8 @@ class MainActivity : AppCompatActivity() {
             var guess = guessBoxET.text.toString().lowercase()
             var correctAnswer = findViewById<TextView>(R.id.track_Description)
             var altCorrectAnswer = songTitle
+            var altCorrectAnswerTwo = songAndArtist
+
             correctAnswer.visibility = View.VISIBLE
             var correctAnswerStr: String = correctAnswer.text.toString().lowercase()
             // Remove white spacing, commas, apostrophes to help prevent "wrong" answers with slightly off grammar
@@ -139,6 +142,16 @@ class MainActivity : AppCompatActivity() {
             altCorrectAnswerStr = altCorrectAnswerStr.replace("?", "")
             altCorrectAnswerStr = altCorrectAnswerStr.replace("!", "")
             altCorrectAnswerStr = altCorrectAnswerStr.replace(".", "")
+
+            // For just artist and song title guess
+            var altCorrectAnswerTwoStr: String = altCorrectAnswerTwo.lowercase()
+            altCorrectAnswerTwoStr = altCorrectAnswerTwoStr.replace("'", "")
+            altCorrectAnswerTwoStr = altCorrectAnswerTwoStr.replace(",", "")
+            altCorrectAnswerTwoStr = altCorrectAnswerTwoStr.replace(" ", "")
+            altCorrectAnswerTwoStr = altCorrectAnswerTwoStr.replace("\n", "")
+            altCorrectAnswerTwoStr = altCorrectAnswerTwoStr.replace("?", "")
+            altCorrectAnswerTwoStr = altCorrectAnswerTwoStr.replace("!", "")
+            altCorrectAnswerTwoStr = altCorrectAnswerTwoStr.replace(".", "")
 
             // For user's guess
             guess = guess.replace("'", "")
@@ -162,6 +175,7 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.LENGTH_LONG
                 ).show()
                 roundsRemaining -= 1
+                guessesRemaining = guesses
                 NextTrack()
             }
             else if (guess == altCorrectAnswerStr) {
@@ -176,6 +190,22 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.LENGTH_LONG
                 ).show()
                 roundsRemaining -= 1
+                guessesRemaining = guesses
+                NextTrack()
+            }
+            else if (guess == altCorrectAnswerTwoStr) {
+                Log.d("answer", "Correct!!")
+                userScore += 7
+                findViewById<TextView>(R.id.tv_user_score).text = "$SCORE_PREFIX$userScore"
+                findViewById<EditText>(R.id.et_guess_box).text.clear()
+                hideKeyboard()
+                Snackbar.make(
+                    findViewById(R.id.constraint_layout),
+                    R.string.guess_correct,
+                    Snackbar.LENGTH_LONG
+                ).show()
+                roundsRemaining -= 1
+                guessesRemaining = guesses
                 NextTrack()
             }
             else {
@@ -187,8 +217,8 @@ class MainActivity : AppCompatActivity() {
                     R.string.guess_incorrect,
                     Snackbar.LENGTH_LONG
                 ).show()
+                guessesRemaining -= 1
             }
-            guessesRemaining -= 1
             // Decrement the number of guesses remaining
             if(guessesRemaining == 0) {
                 guessesRemaining = guesses
@@ -237,7 +267,7 @@ class MainActivity : AppCompatActivity() {
                 val album: String = it.track.album.name
                 val artist: String = it.track.artist.name
                 val icon = it.track.imageUri.raw
-
+                songAndArtist = artist.plus(", ").plus(trackName)
                 var wholeString: String = ""
                 if (album == trackName) {
                     // prevent repetition for single releases with no album
@@ -265,7 +295,7 @@ class MainActivity : AppCompatActivity() {
             R.id.action_info -> {
                 Snackbar.make(
                     findViewById(R.id.constraint_layout),
-                    "Enter the song title for 5 points, or artist, title, and album for 10!",
+                    "Scoring: Artist, Title, Album = 10pts. Artist, Title = 7pts. Title = 5pts.",
                     Snackbar.LENGTH_LONG
                 ).show()
                 true
