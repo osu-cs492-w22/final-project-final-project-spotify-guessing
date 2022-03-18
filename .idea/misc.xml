@@ -3,12 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/School Docs/cs492/final-project-final-project-spotify-guessing/app/src/main/res/drawable-anydpi/ic_guess_icon.xml" value="0.185" />
+        <entry key="..\:/School Docs/cs492/final-project-final-project-spotify-guessing/app/src/main/res/layout/activity_main.xml" value="0.11548913043478261" />
+        <entry key="..\:/School Docs/cs492/final-project-final-project-spotify-guessing/app/src/main/res/layout/activity_settings.xml" value="0.11548913043478261" />
+        <entry key="..\:/School Docs/cs492/final-project-final-project-spotify-guessing/app/src/main/res/layout/content_main.xml" value="0.11548913043478261" />
+        <entry key="..\:/School Docs/cs492/final-project-final-project-spotify-guessing/app/src/main/res/layout/fragment_first.xml" value="0.1765625" />
+        <entry key="..\:/School Docs/cs492/final-project-final-project-spotify-guessing/app/src/main/res/layout/fragment_second.xml" value="0.1765625" />
+        <entry key="..\:/School Docs/cs492/final-project-final-project-spotify-guessing/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.164" />
         <entry key="..\:/Users/Joe/Documents/GitHub/final-project-final-project-spotify-guessing/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/Trey Husko/Desktop/School/492/FinalProject/final-project-final-project-spotify-guessing/app/src/main/res/layout/activity_settings.xml" value="0.24696048632218845" />
-        <entry key="..\:/Users/Trey Husko/Desktop/School/492/FinalProject/final-project-final-project-spotify-guessing/app/src/main/res/layout/content_main.xml" value="0.2421875" />
-        <entry key="..\:/Users/Trey Husko/Desktop/School/492/FinalProject/final-project-final-project-spotify-guessing/app/src/main/res/menu/menu_main.xml" value="0.4359375" />
-        <entry key="..\:/Users/Trey Husko/Desktop/School/492/FinalProject/final-project-final-project-spotify-guessing/app/src/main/res/xml/settings.xml" value="0.24094202898550723" />
-        <entry key="..\:/Users/Trey Husko/Desktop/School/492/FinalProject/final-project-final-project-spotify-guessing/app/src/main/res/xml/xml.xml" value="0.24094202898550723" />
       </map>
     </option>
   </component>

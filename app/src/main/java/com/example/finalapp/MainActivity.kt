@@ -7,6 +7,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
@@ -29,6 +31,7 @@ import com.spotify.android.appremote.api.Connector
 import com.spotify.protocol.types.Image
 import com.spotify.protocol.types.ImageUri
 import com.spotify.protocol.types.PlayerState
+import kotlinx.coroutines.delay
 import org.w3c.dom.Text
 import java.util.*
 
@@ -46,14 +49,17 @@ class MainActivity : AppCompatActivity() {
     private var isPlaying = true
 
     private lateinit var guessBoxET: EditText
+    private lateinit var userScoreTextView: TextView
     private var userScore: Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         guessBoxET = findViewById(R.id.et_guess_box)
-        findViewById<TextView>(R.id.tv_user_score).text = "$SCORE_PREFIX$userScore"
+        userScoreTextView = findViewById(R.id.tv_user_score)
+        userScoreTextView.text = "$SCORE_PREFIX$userScore"
 
         val connectionParams = ConnectionParams.Builder(ClientID)
             .setRedirectUri(redirectUri)
@@ -117,26 +123,43 @@ class MainActivity : AppCompatActivity() {
             Log.d("answer", guess)
             Log.d("answer", correctAnswerStr)
             if (guess == correctAnswerStr) {
+                hideKeyboard()
                 Log.d("answer", "Correct!!")
                 userScore += 10
-                findViewById<TextView>(R.id.tv_user_score).text = "$SCORE_PREFIX$userScore"
+                userScoreTextView.text = "$SCORE_PREFIX$userScore"
                 findViewById<EditText>(R.id.et_guess_box).text.clear()
-                hideKeyboard()
+
                 Snackbar.make(
                     findViewById(R.id.constraint_layout),
                     R.string.guess_correct,
                     Snackbar.LENGTH_LONG
                 ).show()
-                mSpotifyapp?.let { it.playerApi.skipNext() }
+                Handler(Looper.getMainLooper()).postDelayed(
+                    {
+                        // This method will be executed once the timer is over
+                        correctAnswer.visibility = View.INVISIBLE
+                        mSpotifyapp?.playerApi?.skipNext()
+                    },
+                    5000 // value in milliseconds
+                )
             } else {
+                hideKeyboard()
                 Log.d("answer", "incorrect!!")
                 findViewById<EditText>(R.id.et_guess_box).text.clear()
-                hideKeyboard()
                 Snackbar.make(
                     findViewById(R.id.constraint_layout),
                     R.string.guess_incorrect,
                     Snackbar.LENGTH_LONG
                 ).show()
+
+                Handler(Looper.getMainLooper()).postDelayed(
+                    {
+                        // This method will be executed once the timer is over
+                        correctAnswer.visibility = View.INVISIBLE
+                        mSpotifyapp?.playerApi?.skipNext()
+                    },
+                    5000 // value in milliseconds
+                )
             }
         }
     }
@@ -181,18 +204,17 @@ class MainActivity : AppCompatActivity() {
             }
             it.playerApi.setShuffle(true)
             it.playerApi.play(playlistURI)
-            it.playerApi.subscribeToPlayerState().setEventCallback {
-                val trackName: String = it.track.name
-                val album: String = it.track.album.name
-                val artist: String = it.track.artist.name
-                val icon = it.track.imageUri.raw
+            it.playerApi.subscribeToPlayerState().setEventCallback { playerState ->
+                val trackName: String = playerState.track.name
+                val album: String = playerState.track.album.name
+                val artist: String = playerState.track.artist.name
+                val icon = playerState.track.imageUri.raw
 
-                var wholeString: String = ""
-                if (album == trackName) {
+                val wholeString: String = if (album == trackName) {
                     // prevent repetition for single releases with no album
-                    wholeString = artist.plus(", ").plus(trackName)
+                    artist.plus(", ").plus(trackName)
                 } else {
-                    wholeString = artist.plus(", ").plus(trackName).plus(", ").plus(album)
+                    artist.plus(", ").plus(trackName).plus(", ").plus(album)
                 }
 
                 findViewById<TextView>(R.id.track_Description).text =
