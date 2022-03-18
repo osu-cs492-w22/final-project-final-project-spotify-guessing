@@ -44,6 +44,9 @@ class MainActivity : AppCompatActivity() {
 
     private var isPlaying = true
     private var timeRemaing = -1
+    private var guessesRemaining = 0
+    private  var roundsRemaining = 0
+
     private val timer = object: CountDownTimer(30000,1000){
         override fun onTick(p0: Long) {
             timeRemaing = (p0 / 1000).toInt()
@@ -107,7 +110,8 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        var guessesRemaining = guesses
+        guessesRemaining = guesses
+        roundsRemaining = rounds
 
         val guessBtn: Button = findViewById(R.id.btn_guess)
         guessBtn.setOnClickListener {
@@ -145,7 +149,7 @@ class MainActivity : AppCompatActivity() {
                     R.string.guess_correct,
                     Snackbar.LENGTH_LONG
                 ).show()
-//                mSpotifyapp?.let { it.playerApi.skipNext() }
+                roundsRemaining -= 1
                 NextTrack()
             } else {
                 Log.d("answer", "incorrect!!")
@@ -157,12 +161,21 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.LENGTH_LONG
                 ).show()
             }
+            guessesRemaining -= 1
             // Decrement the number of guesses remaining
-            if(guessesRemaining > 1) {
-                guessesRemaining -= 1
-                findViewById<TextView>(R.id.guesses_remaining).text = getString(R.string.num_guesses, guessesRemaining.toString())
-            } else {
-                Log.d("game over", "reset game")
+            if(guessesRemaining == 0) {
+                guessesRemaining = guesses
+                roundsRemaining -= 1
+                NextTrack()
+            }
+
+            findViewById<TextView>(R.id.guesses_remaining).text = getString(R.string.num_guesses, guessesRemaining.toString())
+
+            if(roundsRemaining == 0){
+                // Display end of game message
+                val endDialog = EndGameDialogFragment(userScore)
+                endDialog.show(supportFragmentManager, "game over")
+                newGame()
             }
         }
     }
@@ -243,8 +256,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun newGame() {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
         val genre = sharedPrefs.getString(
             getString(R.string.pref_playlist_key),
@@ -263,16 +275,21 @@ class MainActivity : AppCompatActivity() {
             Log.d("Genre", genre)
         }
 
+        userScore = 0
+
         guessBoxET = findViewById(R.id.et_guess_box)
         findViewById<TextView>(R.id.tv_user_score).text = "$SCORE_PREFIX$userScore"
         findViewById<TextView>(R.id.guesses_remaining).text = getString(R.string.num_guesses, guesses.toString())
+        guessesRemaining = guesses
+        roundsRemaining = rounds
 
         if (genre != null) {
             connected(genre)
         }
-
-
-
+    }
+    override fun onResume() {
+        super.onResume()
+        newGame()
     }
 
     private fun shareScore() {

@@ -43,4 +43,9 @@
     <string name="guess">Guess</string>
     <string name="guess_correct">✔️ Correct!!!</string>
     <string name="guess_incorrect">❌ Incorrect</string>
+
+    <!-- Dialog box-->
+    <string name="dialog_title">Score</string>
+    <string name="dialog_close">Close</string>
+    <string name="dialog_share">Share</string>
 </resources>
