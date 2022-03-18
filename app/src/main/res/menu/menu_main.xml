@@ -1,23 +1,29 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item
+        android:id="@+id/action_share"
+        android:icon="@drawable/ic_action_share"
+        android:title="@string/action_share"
+        app:showAsAction="always"
+        />
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_baseline_settings_dark_24"
         android:title="@string/action_settings"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_play"
         android:icon="@drawable/action_pause"
         android:title = "action_play"
         android:checkable="true"
-        app:showAsAction= "ifRoom" />
+        app:showAsAction= "always" />
 
     <item
         android:id="@+id/action_skip"
         android:icon="@drawable/action_skip"
         android:title="action_skip"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         />
 </menu>
