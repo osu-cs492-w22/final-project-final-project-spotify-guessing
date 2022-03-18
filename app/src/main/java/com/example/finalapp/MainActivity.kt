@@ -184,6 +184,9 @@ class MainActivity : AppCompatActivity() {
             else if (genre == "rap") {
                 playlistURI = "spotify:playlist:1tSgd8fWqF5fgMbEpXsPG3"
             }
+            else if (genre == "good music") {
+                playlistURI = "spotify:playlist:2s6LAffUTjkLboi1aN8CCq"
+            }
             it.playerApi.setShuffle(true)
             it.playerApi.play(playlistURI)
             val random = (0..45).random()
