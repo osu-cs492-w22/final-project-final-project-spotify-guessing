@@ -161,7 +161,7 @@ class MainActivity : AppCompatActivity() {
                 guessesRemaining -= 1
                 findViewById<TextView>(R.id.guesses_remaining).text = getString(R.string.num_guesses, guessesRemaining.toString())
             } else {
-                Log.d("todo", "reset guesses remaining")
+                Log.d("game over", "reset game")
             }
         }
     }
