@@ -21,6 +21,19 @@
         android:id="@+id/tv_user_score"
         android:layout_marginBottom="10dp"
         android:textAppearance="?attr/textAppearanceHeadline4"/>
+    <TextView
+        android:id="@+id/guesses_remaining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintBottom_toTopOf="@id/guess_input"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        tools:text="Guesses Remaining: "/>
 
     <!--
     <ImageView
@@ -33,6 +46,7 @@
         app:layout_constraintVertical_bias="0" />
     -->
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/guess_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -93,6 +107,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="invisible"/>
+        android:visibility="visible"/>
 </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

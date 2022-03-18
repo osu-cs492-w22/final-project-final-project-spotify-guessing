@@ -63,23 +63,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        guessBoxET = findViewById(R.id.et_guess_box)
-        findViewById<TextView>(R.id.tv_user_score).text = "$SCORE_PREFIX$userScore"
-
-        val connectionParams = ConnectionParams.Builder(ClientID)
-            .setRedirectUri(redirectUri)
-            .showAuthView(true)
-            .build()
-
         // Store default game settings
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
         val genre = sharedPrefs.getString(
             getString(R.string.pref_playlist_key),
             null
         )
-        val guesses = sharedPrefs.getString(
+        val guesses = sharedPrefs.getInt(
             getString(R.string.pref_guesses_key),
-            null
+            3
         )
         val rounds = sharedPrefs.getString(
             getString(R.string.pref_rounds_key),
@@ -88,6 +80,16 @@ class MainActivity : AppCompatActivity() {
         if (genre != null) {
             Log.d("Genre", genre)
         }
+
+        guessBoxET = findViewById(R.id.et_guess_box)
+        findViewById<TextView>(R.id.tv_user_score).text = "$SCORE_PREFIX$userScore"
+        findViewById<TextView>(R.id.guesses_remaining).text = getString(R.string.num_guesses, guesses.toString())
+
+        val connectionParams = ConnectionParams.Builder(ClientID)
+            .setRedirectUri(redirectUri)
+            .showAuthView(true)
+            .build()
+
         SpotifyAppRemote.connect(this, connectionParams, object : Connector.ConnectionListener {
             override fun onConnected(appRemote: SpotifyAppRemote) {
                 mSpotifyapp = appRemote
@@ -103,6 +105,8 @@ class MainActivity : AppCompatActivity() {
                 // Something went wrong when attempting to connect! Handle errors here
             }
         })
+
+        var guessesRemaining = guesses
 
         val guessBtn: Button = findViewById(R.id.btn_guess)
         guessBtn.setOnClickListener {
@@ -140,7 +144,8 @@ class MainActivity : AppCompatActivity() {
                     R.string.guess_correct,
                     Snackbar.LENGTH_LONG
                 ).show()
-                mSpotifyapp?.let { it.playerApi.skipNext() }
+//                mSpotifyapp?.let { it.playerApi.skipNext() }
+                NextTrack()
             } else {
                 Log.d("answer", "incorrect!!")
                 findViewById<EditText>(R.id.et_guess_box).text.clear()
@@ -150,6 +155,13 @@ class MainActivity : AppCompatActivity() {
                     R.string.guess_incorrect,
                     Snackbar.LENGTH_LONG
                 ).show()
+            }
+            // Decrement the number of guesses remaining
+            if(guessesRemaining > 1) {
+                guessesRemaining -= 1
+                findViewById<TextView>(R.id.guesses_remaining).text = getString(R.string.num_guesses, guessesRemaining.toString())
+            } else {
+                Log.d("todo", "reset guesses remaining")
             }
         }
     }
