@@ -186,6 +186,8 @@ class MainActivity : AppCompatActivity() {
             }
             it.playerApi.setShuffle(true)
             it.playerApi.play(playlistURI)
+            val random = (0..45).random()
+            it.playerApi.seekToRelativePosition((random * 1000).toLong())
             it.playerApi.subscribeToPlayerState().setEventCallback {
                 val trackName: String = it.track.name
                 val album: String = it.track.album.name
@@ -235,6 +237,38 @@ class MainActivity : AppCompatActivity() {
             }
             else ->super.onOptionsItemSelected(item)
         }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val genre = sharedPrefs.getString(
+            getString(R.string.pref_playlist_key),
+            null
+        )
+        val guesses = sharedPrefs.getInt(
+            getString(R.string.pref_guesses_key),
+            3
+
+        )
+        val rounds = sharedPrefs.getInt(
+            getString(R.string.pref_rounds_key),
+            3
+        )
+        if (genre != null) {
+            Log.d("Genre", genre)
+        }
+
+        guessBoxET = findViewById(R.id.et_guess_box)
+        findViewById<TextView>(R.id.tv_user_score).text = "$SCORE_PREFIX$userScore"
+        findViewById<TextView>(R.id.guesses_remaining).text = getString(R.string.num_guesses, guesses.toString())
+
+        if (genre != null) {
+            connected(genre)
+        }
+
+
 
     }
 
