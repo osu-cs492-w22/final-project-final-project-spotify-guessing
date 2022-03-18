@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var songTitle: String
     lateinit var songAndArtist : String
     private var userScore: Int = 0
+    var totalGuesses: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,8 +77,8 @@ class MainActivity : AppCompatActivity() {
         val guesses = sharedPrefs.getInt(
             getString(R.string.pref_guesses_key),
             3
-
         )
+        totalGuesses = guesses
         val rounds = sharedPrefs.getInt(
             getString(R.string.pref_rounds_key),
             3
@@ -88,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
         guessBoxET = findViewById(R.id.et_guess_box)
         findViewById<TextView>(R.id.tv_user_score).text = "$SCORE_PREFIX$userScore"
-        findViewById<TextView>(R.id.guesses_remaining).text = getString(R.string.num_guesses, guesses.toString())
+        findViewById<TextView>(R.id.guesses_remaining).text = getString(R.string.num_guesses, totalGuesses.toString())
 
         val connectionParams = ConnectionParams.Builder(ClientID)
             .setRedirectUri(redirectUri)
@@ -175,7 +176,7 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.LENGTH_LONG
                 ).show()
                 roundsRemaining -= 1
-                guessesRemaining = guesses
+                guessesRemaining = totalGuesses
                 NextTrack()
             }
             else if (guess == altCorrectAnswerStr) {
@@ -190,7 +191,7 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.LENGTH_LONG
                 ).show()
                 roundsRemaining -= 1
-                guessesRemaining = guesses
+                guessesRemaining = totalGuesses
                 NextTrack()
             }
             else if (guess == altCorrectAnswerTwoStr) {
@@ -205,7 +206,7 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.LENGTH_LONG
                 ).show()
                 roundsRemaining -= 1
-                guessesRemaining = guesses
+                guessesRemaining = totalGuesses
                 NextTrack()
             }
             else {
@@ -221,7 +222,7 @@ class MainActivity : AppCompatActivity() {
             }
             // Decrement the number of guesses remaining
             if(guessesRemaining == 0) {
-                guessesRemaining = guesses
+                guessesRemaining = totalGuesses
                 roundsRemaining -= 1
                 NextTrack()
             }
@@ -333,6 +334,7 @@ class MainActivity : AppCompatActivity() {
             3
 
         )
+        totalGuesses = guesses
         val rounds = sharedPrefs.getInt(
             getString(R.string.pref_rounds_key),
             3
@@ -345,8 +347,8 @@ class MainActivity : AppCompatActivity() {
 
         guessBoxET = findViewById(R.id.et_guess_box)
         findViewById<TextView>(R.id.tv_user_score).text = "$SCORE_PREFIX$userScore"
-        findViewById<TextView>(R.id.guesses_remaining).text = getString(R.string.num_guesses, guesses.toString())
-        guessesRemaining = guesses
+        findViewById<TextView>(R.id.guesses_remaining).text = getString(R.string.num_guesses, totalGuesses.toString())
+        guessesRemaining = totalGuesses
         roundsRemaining = rounds
 
         if (genre != null) {
