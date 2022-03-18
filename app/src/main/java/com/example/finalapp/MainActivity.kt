@@ -143,27 +143,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /*override fun onStart() {
-        super.onStart()
-        val connectionParams = ConnectionParams.Builder(ClientID)
-            .showAuthView(true)
-            .build()
-
-        SpotifyAppRemote.connect(this, connectionParams, object : Connector.ConnectionListener {
-            override fun onConnected(appRemote: SpotifyAppRemote) {
-                mSpotifyapp = appRemote
-                Log.d("MainActivity", "Connected! Yay!")
-                // Now you can start interacting with App Remote
-                connected()
-            }
-
-            override fun onFailure(throwable: Throwable) {
-                Log.e("MainActivity", throwable.message, throwable)
-                // Something went wrong when attempting to connect! Handle errors here
-            }
-        })
-    }*/
-
     private fun connected(genre : String) {
         mSpotifyapp?.let {
             var playlistURI = "spotify:playlist:37i9dQZF1DZ06evO4BaAkp"
