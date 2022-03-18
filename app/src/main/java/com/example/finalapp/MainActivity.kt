@@ -58,6 +58,20 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private val rtimer = object: CountDownTimer(5000,1000){
+        override fun onTick(p0: Long) {
+
+        }
+
+        override fun onFinish() {
+            var test = findViewById<TextView>(R.id.track_Description)
+            test.visibility = View.INVISIBLE
+            NextTrack()
+        }
+
+    }
+
+
     private lateinit var guessBoxET: EditText
     lateinit var songTitle: String
     lateinit var songAndArtist : String
@@ -122,7 +136,7 @@ class MainActivity : AppCompatActivity() {
             var altCorrectAnswer = songTitle
             var altCorrectAnswerTwo = songAndArtist
 
-            correctAnswer.visibility = View.VISIBLE
+            //correctAnswer.visibility = View.INVISIBLE
             var correctAnswerStr: String = correctAnswer.text.toString().lowercase()
             // Remove white spacing, commas, apostrophes to help prevent "wrong" answers with slightly off grammar
             // For correct answer
@@ -224,7 +238,14 @@ class MainActivity : AppCompatActivity() {
             if(guessesRemaining == 0) {
                 guessesRemaining = totalGuesses
                 roundsRemaining -= 1
-                NextTrack()
+                correctAnswer.visibility = View.VISIBLE
+                Snackbar.make(
+                    findViewById(R.id.constraint_layout),
+                    "Next Round Starting soon",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                rtimer.start()
+                //NextTrack()
             }
 
             findViewById<TextView>(R.id.guesses_remaining).text = getString(R.string.num_guesses, guessesRemaining.toString())
