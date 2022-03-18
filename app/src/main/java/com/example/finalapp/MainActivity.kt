@@ -212,6 +212,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
+            R.id.action_share -> {
+                shareScore()
+                true
+            }
             R.id.action_settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
@@ -228,6 +232,16 @@ class MainActivity : AppCompatActivity() {
             else ->super.onOptionsItemSelected(item)
         }
 
+    }
+
+    private fun shareScore() {
+        val shareScore = "Score: $userScore"
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, shareScore)
+            type = "text/plain"
+        }
+        startActivity(Intent.createChooser(intent, null))
     }
 
     override fun onDestroy() {
