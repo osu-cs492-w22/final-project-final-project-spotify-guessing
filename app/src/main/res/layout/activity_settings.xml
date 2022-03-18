@@ -6,4 +6,6 @@
     android:layout_height="match_parent"
     android:id="@+id/settings_fragment"
     android:name="com.example.finalapp.SettingsFragment"
-    tools:context="com.example.finalapp.SettingsActivity" />
+    tools:context="com.example.finalapp.SettingsActivity"
+    android:theme="@style/Settings_Theme"
+    />
