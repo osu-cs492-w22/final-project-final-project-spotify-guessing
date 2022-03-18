@@ -59,6 +59,8 @@ class MainActivity : AppCompatActivity() {
             .setRedirectUri(redirectUri)
             .showAuthView(true)
             .build()
+
+        // Store default game settings
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
         val genre = sharedPrefs.getString(
             getString(R.string.pref_playlist_key),
