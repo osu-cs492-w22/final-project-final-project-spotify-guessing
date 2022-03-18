@@ -10,4 +10,5 @@
     <color name="spotify_green">#1DB954</color>
     <color name="spotify_greenAlt">#0f7a35</color>
     <color name="spotify_black">#191414</color>
+    <color name="spotify_blackAlt">#000000</color>
 </resources>

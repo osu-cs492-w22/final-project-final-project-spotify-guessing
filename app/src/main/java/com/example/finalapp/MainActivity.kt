@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var guessBoxET: EditText
+    lateinit var songTitle: String
     private var userScore: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,6 +118,7 @@ class MainActivity : AppCompatActivity() {
         guessBtn.setOnClickListener {
             var guess = guessBoxET.text.toString().lowercase()
             var correctAnswer = findViewById<TextView>(R.id.track_Description)
+            var altCorrectAnswer = songTitle
             correctAnswer.visibility = View.VISIBLE
             var correctAnswerStr: String = correctAnswer.text.toString().lowercase()
             // Remove white spacing, commas, apostrophes to help prevent "wrong" answers with slightly off grammar
@@ -128,6 +130,17 @@ class MainActivity : AppCompatActivity() {
             correctAnswerStr = correctAnswerStr.replace("?", "")
             correctAnswerStr = correctAnswerStr.replace("!", "")
             correctAnswerStr = correctAnswerStr.replace(".", "")
+
+            // For just song title guess
+            var altCorrectAnswerStr: String = altCorrectAnswer.lowercase()
+            altCorrectAnswerStr = altCorrectAnswerStr.replace("'", "")
+            altCorrectAnswerStr = altCorrectAnswerStr.replace(",", "")
+            altCorrectAnswerStr = altCorrectAnswerStr.replace(" ", "")
+            altCorrectAnswerStr = altCorrectAnswerStr.replace("\n", "")
+            altCorrectAnswerStr = altCorrectAnswerStr.replace("?", "")
+            altCorrectAnswerStr = altCorrectAnswerStr.replace("!", "")
+            altCorrectAnswerStr = altCorrectAnswerStr.replace(".", "")
+
             // For user's guess
             guess = guess.replace("'", "")
             guess = guess.replace(",", "")
@@ -151,7 +164,22 @@ class MainActivity : AppCompatActivity() {
                 ).show()
                 roundsRemaining -= 1
                 NextTrack()
-            } else {
+            }
+            else if (guess == altCorrectAnswerStr) {
+                Log.d("answer", "Correct!!")
+                userScore += 5
+                findViewById<TextView>(R.id.tv_user_score).text = "$SCORE_PREFIX$userScore"
+                findViewById<EditText>(R.id.et_guess_box).text.clear()
+                hideKeyboard()
+                Snackbar.make(
+                    findViewById(R.id.constraint_layout),
+                    R.string.guess_correct,
+                    Snackbar.LENGTH_LONG
+                ).show()
+                roundsRemaining -= 1
+                NextTrack()
+            }
+            else {
                 Log.d("answer", "incorrect!!")
                 findViewById<EditText>(R.id.et_guess_box).text.clear()
                 hideKeyboard()
@@ -206,6 +234,7 @@ class MainActivity : AppCompatActivity() {
             it.playerApi.seekToRelativePosition((random * 1000).toLong())
             it.playerApi.subscribeToPlayerState().setEventCallback {
                 val trackName: String = it.track.name
+                songTitle = trackName
                 val album: String = it.track.album.name
                 val artist: String = it.track.artist.name
                 val icon = it.track.imageUri.raw
